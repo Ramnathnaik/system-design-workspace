@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.0</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.systemdesign</groupId>
+    <artifactId>cdc-ecommerce</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    
+    <name>CDC E-Commerce System</name>
+    <description>Change Data Capture implementation with Spring Boot Microservices</description>
+
+    <modules>
+        <module>order-service</module>
+        <module>inventory-service</module>
+        <module>billing-service</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <debezium.version>2.5.0.Final</debezium.version>
+        <kafka.version>3.6.0</kafka.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Debezium Embedded -->
+            <dependency>
+                <groupId>io.debezium</groupId>
+                <artifactId>debezium-embedded</artifactId>
+                <version>${debezium.version}</version>
+            </dependency>
+            
+            <!-- Debezium MySQL Connector -->
+            <dependency>
+                <groupId>io.debezium</groupId>
+                <artifactId>debezium-connector-mysql</artifactId>
+                <version>${debezium.version}</version>
+            </dependency>
+            
+            <!-- Kafka -->
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-clients</artifactId>
+                <version>${kafka.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
