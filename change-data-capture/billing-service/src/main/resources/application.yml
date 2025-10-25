@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: billing-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/billing_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: billing-service-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+
+server:
+  port: 8083
+
+debezium:
+  connector:
+    database:
+      hostname: localhost
+      port: 3306
+      user: root
+      password: root
+      dbname: billing_db
+      server:
+        id: 184056
+        name: billing-db-server
+    offset:
+      storage: org.apache.kafka.connect.storage.FileOffsetBackingStore
+      file: D:/System Design/Codebase/system-design-workspace/change-data-capture/offsets/billing-offset.dat
+      flush:
+        interval:
+          ms: 60000
